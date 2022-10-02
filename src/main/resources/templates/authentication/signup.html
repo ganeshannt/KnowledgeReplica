@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts::head"><title>Knowledge Replica</title></head>
+<style>
+    .error {
+        color: red;
+    }
+
+
+
+
+
+
+
+
+</style>
+<body>
+
+<header th:replace="layouts::navbar"></header>
+
+<!-- signup form section -->
+
+<div class="container">
+    <div class="row py-5 mt-1 align-items-center">
+        <!-- For Demo Purpose -->
+        <div class="col-md-5 pr-lg-5 mb-5 mb-md-0">
+            <img alt="" class="img-fluid mb-3 d-none d-md-block" th:src="@{/img/signup.svg}">
+            <h1>Create an Account</h1>
+            <p class="font-italic text-muted mb-0">let the world to know about your skills &#128293;</p>
+            <p class="font-italic text-muted">Article Platform by
+                <a class="text-muted" href="https://knowledgereplica.com">
+                    <u>Knowledge Replica</u></a>
+            </p>
+        </div>
+
+        <!-- Registeration Form -->
+        <div class="col-md-7 col-lg-6 ml-auto">
+
+            <form enctype="multipart/form-data" id="register-form" method="POST"
+                  th:action="@{/authenticate/signup}" th:object="${user}">
+                <div class="col">
+
+                    <!-- alert message -->
+                    <div class="input-group col-lg-12">
+                        <div th:replace="alerts::RegistrationMessage"></div>
+                    </div>
+
+                    <!-- First Name -->
+                    <p th:errorclass="error" th:errors="*{firstName}"
+                       th:if="${#fields.hasErrors('firstName')}"></p>
+                    <div class="input-group col-lg-12 mb-4">
+                        <div class="input-group-prepend">
+                                <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                  <i class="fa fa-user text-muted"></i>
+                              </span>
+                        </div>
+                        <input class="form-control bg-white border-left-0 border-md" id="firstName" name="firstname"
+                               placeholder="First Name"
+                               th:field="*{firstName}" type="text">
+                    </div>
+
+                    <!-- Last Name -->
+                    <p th:errorclass="error" th:errors="*{lastName}"
+                       th:if="${#fields.hasErrors('lastName')}"></p>
+                    <div class="input-group col-lg-12 mb-4">
+                        <div class="input-group-prepend">
+                                <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                  <i class="fa fa-user text-muted"></i>
+                              </span>
+                        </div>
+                        <input class="form-control bg-white border-left-0 border-md" id="lastName" name="lastname"
+                               placeholder="Last Name"
+                               th:field="*{lastName}" type="text">
+                    </div>
+
+                    <!-- Email Address -->
+                    <p th:errorclass="error" th:errors="*{email}"
+                       th:if="${#fields.hasErrors('email')}"></p>
+                    <div class="input-group col-lg-12 mb-4">
+                        <div class="input-group-prepend">
+                                <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                  <i class="fa fa-envelope text-muted"></i>
+                              </span>
+                        </div>
+                        <input class="form-control bg-white border-left-0 border-md" id="email" name="email"
+                               placeholder="Email Address"
+                               th:field="*{email}" type="email">
+                    </div>
+
+                    <!-- Password -->
+                    <p th:errorclass="error" th:errors="*{password}"
+                       th:if="${#fields.hasErrors('password')}"></p>
+                    <div class="input-group col-lg-12 mb-4">
+                        <div class="input-group-prepend">
+                                <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                  <i class="fa fa-lock text-muted"></i>
+                              </span>
+                        </div>
+                        <input class="form-control bg-white border-left-0 border-md" id="password" name="password"
+                               placeholder="Password"
+                               th:field="*{password}" type="password">
+                    </div>
+
+                    <!-- Password Confirmation -->
+                    <p th:errorclass="error" th:errors="*{confirmPassword}"
+                       th:if="${#fields.hasErrors('confirmPassword')}"></p>
+                    <div class="input-group col-lg-12 mb-4">
+                        <div class="input-group-prepend">
+                                <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                  <i class="fa fa-lock text-muted"></i>
+                              </span>
+                        </div>
+                        <input class="form-control bg-white border-left-0 border-md" id="passwordConfirmation"
+                               name="passwordConfirmation"
+                               placeholder="Confirm Password" th:field="*{confirmPassword}"
+                               type="password">
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="form-group col-lg-12 mx-auto mb-0">
+                        <button class="btn btn-primary btn-block py-2" type="submit">Create your account</button>
+                    </div>
+
+
+                    <!-- Divider Text -->
+                    <div class="form-group col-lg-12 mx-auto d-flex align-items-center my-4">
+                        <div class="border-bottom w-100 ml-5"></div>
+                        <span class="px-2 small text-muted font-weight-bold text-muted">OR</span>
+                        <div class="border-bottom w-100 mr-5"></div>
+                    </div>
+
+                    <!-- Social Login -->
+                    <div class="form-group col-lg-12 mx-auto">
+                        <a class="btn btn-primary btn-block py-2 btn-google" href="#">
+                            <i class="fab fa-google"></i>&nbsp&nbsp
+                            <span class="font-weight-bold">Continue with Google</span>
+                        </a>
+                        <a class="btn btn-primary btn-block py-2 btn-facebook" href="#">
+                            <i class="fab fa-facebook"></i>&nbsp&nbsp
+                            <span class="font-weight-bold">Continue with Facebook</span>
+                        </a>
+                    </div>
+
+                    <!-- Already Registered -->
+                    <div class="text-center w-100">
+                        <p class="text-muted font-weight-bold">Already Registered? <a class="text-primary ml-2"
+                                                                                      th:href="@{/authenticate/login}">Login</a>
+                        </p>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--    footer-->
+<footer th:replace="layouts::footer"></footer>
+<!-- Libs JS -->
+<div th:replace="layouts::JS-Include"></div>
+</body>
+</html>

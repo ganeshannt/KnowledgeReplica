@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+>
+
+<header class="header" th:fragment="navbar">
+    <!-- Main Navbar-->
+    <nav class="navbar navbar-expand-lg">
+        <div class="search-area">
+            <div class="
+              search-area-inner
+              d-flex
+              align-items-center
+              justify-content-center
+            ">
+                <div class="close-btn"><i class="icon-close"></i></div>
+                <div class="row d-flex justify-content-center">
+                    <div class="col-md-8">
+                        <form action="#">
+                            <div class="form-group">
+                                <input id="search" name="search" placeholder="What are you looking for?" type="search"/>
+                                <button class="submit" type="submit">
+                                    <i class="icon-search-1"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <!-- Navbar Brand -->
+            <div class="
+              navbar-header
+              d-flex
+              align-items-center
+              justify-content-between
+            ">
+                <!-- Navbar Brand --><a class="navbar-brand" href="index.html">Knowledge Replica</a
+            >
+                <!-- Toggle Button-->
+                <button
+                        aria-controls="navbarcollapse"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation"
+                        class="navbar-toggler"
+                        data-target="#navbarcollapse"
+                        data-toggle="collapse"
+                        type="button"
+                >
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+            <!-- Navbar Menu -->
+            <div class="collapse navbar-collapse" id="navbarcollapse">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="index.html"
+                        ><i class="fas fa-home"></i> Home</a
+                        >
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link active" href="blog.html"
+                        ><i class="fas fa-blog"></i> Blog</a
+                        >
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="post.html"
+                        ><i class="fas fa-pen-nib"></i> Wanna write ?</a
+                        >
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#"
+                        ><i class="fas fa-id-badge"></i> Contact</a
+                        >
+                    </li>
+                </ul>
+                <div class="navbar-text">
+                    <a class="search-btn" href="#"><i class="icon-search-1"></i></a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div class="alert alert-success" role="alert" th:fragment="ResetPasswordMessage"
+     th:if="${resetPasswordMessage != null}">
+    <p class="mb-0" th:text="${resetPasswordMessage}"></p>
+</div>
+
+
+<div class="alert alert-success" role="alert" th:fragment="RegistrationMessage" th:if="${registrationMessage != null}">
+    <p class="mb-0" th:text="${registrationMessage}"></p>
+</div>
+<div class="alert alert-success" role="alert" th:fragment="RegistrationSuccessMessage"
+     th:if="${registrationSuccessMessage != null}">
+    <p class="mb-0" th:text="${registrationSuccessMessage}"></p>
+</div>
+<div class="alert alert-success" role="alert" th:fragment="ContactSuccess"
+     th:if="${contactSuccess != null}">
+    <p class="mb-0" th:text="${contactSuccess}"></p>
+</div>
+<div class="alert alert-success" role="alert" th:fragment="NewsletterSuccess"
+     th:if="${newsletterSuccess != null}">
+    <p class="mb-0" th:text="${newsletterSuccess}"></p>
+</div>
+
+<div class="alert alert-danger" role="alert" th:fragment="LoginError" th:if="${loginError != null}">
+    <p class="mb-0" th:text="${loginError}"></p>
+</div>
+<div class="alert alert-danger" role="alert" th:fragment="InvalidSession" th:if="${invalidSession != null}">
+    <p class="mb-0" th:text="${invalidSession}"></p>
+</div>
+
+<div class="alert alert-danger" role="alert" th:fragment="InvalidTokenError" th:if="${invalidTokenError != null}">
+    <p class="mb-0" th:text="${invalidTokenError}"></p>
+</div>
+<div class="alert alert-dark" role="alert" th:fragment="EmailServiceError" th:if="${emailServiceError != null}">
+    <p class="mb-0" th:text="${emailServiceError}"></p>
+</div>
+<div class="alert alert-danger" role="alert" th:fragment="ExpiredTokenError" th:if="${expiredTokenError != null}">
+    <p class="mb-0" th:text="${expiredTokenError}"></p>
+</div>
+<div class="alert alert-danger" role="alert" th:fragment="ExpiredResetPasswordTokenError"
+     th:if="${expiredResetPasswordTokenError != null}">
+    <p class="mb-0" th:text="${expiredResetPasswordTokenError}"></p>
+</div>
+<div class="alert alert-success" role="alert" th:fragment="ResetPasswordSuccess"
+     th:if="${resetPasswordSuccess != null}">
+    <p class="mb-0" th:text="${resetPasswordSuccess}"></p>
+</div>
+<div class="alert alert-danger" role="alert" th:fragment="PasswordMismatchError"
+     th:if="${passwordMismatchError != null}">
+    <p class="mb-0" th:text="${passwordMismatchError}"></p>
+</div>
+<div class="alert alert-danger" role="alert" th:fragment="EmptyFieldError" th:if="${emptyFieldError != null}">
+    <p class="mb-0" th:text="${emptyFieldError}"></p>
+</div>
+<div class="alert alert-danger" role="alert" th:fragment="EmptyEmailError" th:if="${emptyEmailError != null}">
+    <p class="mb-0" th:text="${emptyEmailError}"></p>
+</div>
+
+<div class="alert alert-success" role="alert" th:fragment="PostCreationSuccess" th:if="${postCreationSuccess != null}">
+    <p class="mb-0" th:text="${postCreationSuccess}"></p>
+</div>
+
+<div class="alert alert-danger" role="alert" th:fragment="ThumbnailUploadFailed"
+     th:if="${thumbnailUploadFailed != null}">
+    <p class="mb-0" th:text="${thumbnailUploadFailed}"></p>
+</div>
+
+<div class="alert alert-success" role="alert" th:fragment="PostUpdateSuccessMessage"
+     th:if="${postUpdateSuccessMessage != null}">
+    <p class="mb-0" th:text="${postUpdateSuccessMessage}"></p>
+</div>
+
+<div class="alert alert-warning" role="alert" th:fragment="UserAccessDenied"
+     th:if="${userAccessDenied != null}">
+    <p class="mb-0" th:text="${userAccessDenied}"></p>
+</div>
+
+<div class="alert alert-warning" role="alert" th:fragment="PostDeleteSuccessMessage"
+     th:if="${postDeleteSuccessMessage != null}">
+    <p class="mb-0" th:text="${postDeleteSuccessMessage}"></p>
+</div>
+
+
+</html>

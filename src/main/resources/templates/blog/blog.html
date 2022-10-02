@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts::head">
+    <title>Knowledge Replica</title>
+</head>
+<body>
+<header th:replace="layouts::navbar"></header>
+<div class="container">
+    <div class="row">
+        <!-- Latest Posts -->
+        <main class="posts-listing col-lg-8">
+            <div class="container">
+                <div class="row">
+                    <!-- post -->
+                    <div class="post col-xl-6" th:each="post:${postList}">
+                        <div class="post-thumbnail">
+                            <a th:href="@{/post/{postId}(postId=${post.id})}"
+                            ><img
+                                    alt="..."
+                                    class="img-fluid"
+                                    th:src="@{'/media/thumbnail/'+${post.thumbnail}}"
+                            /></a>
+                        </div>
+                        <div class="post-details">
+                            <div class="post-meta d-flex justify-content-between">
+                                <div class="date meta-last"></div>
+                                <div class="category"><a href="#" th:text="${post.getCategory().getName()}"></a></div>
+                            </div>
+                            <a th:href="@{/post/{postId}(postId=${post.id})}">
+                                <h3 class="h4" th:text="${post.getTitle()}">
+                                </h3>
+                            </a
+                            >
+                            <p class="text-muted" th:text="${post.getDescription()}">
+                            </p>
+                            <footer class="post-footer d-flex align-items-center">
+                                <a
+                                        class="author d-flex align-items-center flex-wrap"
+                                        href="#"
+                                >
+                                    <div class="avatar">
+                                        <img
+                                                alt="..."
+                                                class="img-fluid"
+                                                th:src="@{/media/profile/default_profile_image.png}"
+                                        />
+                                    </div>
+                                    <div class="title"><span th:text="${post.getUser().getFirstName()}"></span></div>
+                                </a
+                                >
+                                <div class="date">
+                                    <i class="icon-clock"></i><span
+                                        th:text="${#temporals.format(post.getCreationDate(), 'dd-MM-yyyy')}"></span>
+                                </div>
+                                <div class="comments meta-last">
+                                    <i class="icon-comment"></i><span th:text="${post.getCommentCount()}"></span>
+                                </div>
+                            </footer>
+                        </div>
+                    </div>
+                </div>
+                <!-- Pagination -->
+                <nav aria-label="Page navigation example">
+                    <ul
+                            class="
+                  pagination pagination-template
+                  d-flex
+                  justify-content-center
+                "
+                    >
+                        <li class="page-item">
+                            <a class="page-link" th:href="@{/post(size=${postList.size}, page=${pageNumber})}">
+                                <i class="fa fa-angle-left"></i
+                                ></a>
+                        </li>
+
+
+                        <li class="page-item" th:each="pageNumber : ${pageNumbers}"
+                            th:if="${postList.totalPages > 0}">
+                            <div th:if="${(param.category != null)}">
+                                <a class="page-link"
+                                   th:classappend="${pageNumber==postList.number + 1} ? active"
+                                   th:href="@{/post(category=${param.category},size=${postList.size}, page=${pageNumber})}"
+                                   th:text="${pageNumber}"></a>
+                            </div>
+                            <div th:unless="${(param.category != null)}">
+                                <a class="page-link"
+                                   th:classappend="${pageNumber==postList.number + 1} ? active"
+                                   th:href="@{/post(size=${postList.size}, page=${pageNumber})}"
+                                   th:text="${pageNumber}"></a>
+                            </div>
+
+                        </li>
+
+
+                        <li class="page-item">
+                            <a class="page-link" href="#">
+                                <i class="fa fa-angle-right"></i
+                                ></a>
+                        </li>
+
+                    </ul>
+                </nav>
+            </div>
+        </main>
+        <aside th:replace="layouts::sidebar">
+        </aside>
+    </div>
+</div>
+<!--    footer-->
+<footer th:replace="layouts::footer"></footer>
+<!-- Libs JS -->
+<div th:replace="layouts::JS-Include"></div>
+</body>
+</html>

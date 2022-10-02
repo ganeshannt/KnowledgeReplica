@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts::head"><title>Knowledge Replica</title></head>
+<body>
+
+<header th:replace="layouts::navbar"></header>
+
+
+<h1>User Dashboard</h1>
+
+<section class="py-4" id="dashboard">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Welcome <span th:text="${#httpSession.getAttribute('firstName')}"></span></h2>
+
+                <div th:replace="alerts::PostUpdateSuccessMessage"></div>
+                <div th:replace="alerts::UserAccessDenied"></div>
+                <div th:replace="alerts::PostDeleteSuccessMessage"></div>
+                <div th:replace="alerts::PostCreationSuccess"></div>
+
+                <h3 class="mt-5 text-primary">Your blog list</h3>
+                <div th:if="${!postList.isEmpty()}">
+                    <table class="table ">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Operation-1</th>
+                            <th scope="col">Operation-2</th>
+                            <th scope="col">Operation-3</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="post:${postList}">
+                            <td th:text="${post.id}"></td>
+                            <td th:text="${post.title}"></td>
+                            <td>
+                                <a class="btn btn-success" th:href="@{/post/{postId}(postId=${post.id})}">View</a>
+                            </td>
+                            <td>
+                                <a class="btn btn-primary"
+                                   th:href="@{/account/user/post/update/{postId}(postId=${post.id})}">Update</a>
+                            </td>
+                            <td>
+                                <a class="btn btn-danger"
+                                   th:href="@{/account/user/post/delete/{postId}(postId=${post.id})}">Delete</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div th:unless="${!postList.isEmpty()}">
+                    <p>You haven't published any article</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!--    footer-->
+<footer th:replace="layouts::footer"></footer>
+<!-- Libs JS -->
+<div th:replace="layouts::JS-Include"></div>
+</body>
+</html>

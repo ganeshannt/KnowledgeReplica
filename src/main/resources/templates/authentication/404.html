@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts::head"><title>Knowledge Replica</title></head>
+<body>
+
+<header th:replace="layouts::navbar"></header>
+
+<!-- 404 section -->
+
+<div class="container">
+
+    <center>
+
+        <img alt="" class="mt-2 mb-5" height="300" th:src="@{/img/404.svg}" width="500"/>
+        <h1>We could not find this page...</h1>
+        <p class="font-italic text-muted mb-0">
+            let the world to know about your skills &#128293;
+        </p>
+        <p class="font-italic text-muted">
+            Article Platform by
+            <a class="text-muted" href="https://knowledgereplica.com">
+                <u>Knowledge Replica</u></a>
+        </p>
+    </center>
+
+</div>
+<!--    footer-->
+<footer th:replace="layouts::footer"></footer>
+<!-- Libs JS -->
+<div th:replace="layouts::JS-Include"></div>
+</body>
+</html>

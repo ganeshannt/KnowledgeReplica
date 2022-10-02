@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts::head">
+    <title>Knowledge Replica</title>
+</head>
+<style>
+    .error {
+        color: red;
+    }
+
+
+
+
+
+
+
+
+</style>
+<body>
+
+<header th:replace="layouts::navbar"></header>
+<div class="container">
+    <h2>Create post page</h2>
+
+
+    <div class="input-group col-lg-12">
+        <div th:replace="alerts::ThumbnailUploadFailed"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 mt-5">
+            <form enctype="multipart/form-data" method="post" th:action="@{/account/user/post/publish}"
+                  th:object="${post}">
+                <!-- title -->
+                <p th:errorclass="error" th:errors="*{title}"
+                   th:if="${#fields.hasErrors('title')}"></p>
+                <div class="form-group">
+                    <label for="title">Title:</label>
+                    <input autocomplete="off" class="form-control" id="title" placeholder="Title" th:field="*{title}"
+                           type="text"/>
+                </div>
+
+                <!-- Category -->
+                <p th:errorclass="error" th:errors="*{category}"
+                   th:if="${#fields.hasErrors('category')}"></p>
+                <div class="form-group">
+                    <label for="title">Select Category:</label>
+                    <select class="form-control" name="category">
+                        <option th:each="categoryOption : ${categoryList}"
+                                th:text="${categoryOption.name}" th:value="${categoryOption.category}"></option>
+                    </select>
+                </div>
+
+                <!-- Description -->
+                <p th:errorclass="error" th:errors="*{description}"
+                   th:if="${#fields.hasErrors('description')}"></p>
+                <div class="form-group">
+                    <label for="title">Description:</label>
+                    <textarea class="form-control" id="description" name="description"
+                              placeholder="Type your comment" th:field="*{description}"></textarea>
+                </div>
+
+                <!--                thumbnail upload    -->
+                <div class="form-group">
+                    <label>Upload thumbnail</label>
+                    <div class="custom-file">
+                        <input accept="image/png, image/jpeg" class="custom-file-input form-control" id="customFile"
+                               multiple
+                               name="thumbnail"
+                               type="file"/>
+                        <label class="custom-file-label" for="customFile">Choose Thumbnail</label>
+                    </div>
+                </div>
+
+                <!--                content-->
+                <p th:errorclass="error" th:errors="*{content}"
+                   th:if="${#fields.hasErrors('content')}"></p>
+                <div class="form-group">
+                    <label for="content">Content:</label>
+                    <textarea autocomplete="off" class="form-control" id="content" placeholder="Content" rows="6"
+                              th:field="*{content}" type="text"></textarea>
+                </div>
+                <button class="btn btn-primary" type="submit">Publish</button>
+            </form>
+        </div>
+    </div>
+
+
+</div>
+
+<!--    footer-->
+<footer th:replace="layouts::footer"></footer>
+<!-- Libs JS -->
+<div th:replace="layouts::JS-Include"></div>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<script>
+    $('#content').summernote({
+        height: 200
+    });
+    $(document).ready(function () {
+        $('input[type="file"]').on("change", function () {
+            let filenames = [];
+            let files = this.files;
+            if (files.length > 1) {
+                filenames.push("Total Files (" + files.length + ")");
+            } else {
+                for (let i in files) {
+                    if (files.hasOwnProperty(i)) {
+                        filenames.push(files[i].name);
+                    }
+                }
+            }
+            $(this)
+                .next(".custom-file-label")
+                .html(filenames.join(","));
+        });
+    });
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+>
+<head th:replace="layouts::head"><title>Knowledge Replica</title></head>
+<style>
+    .error {
+        color: red;
+    }
+
+
+
+
+
+
+
+
+</style>
+<body>
+
+<header th:replace="layouts::navbar"></header>
+<!-- Hero Section-->
+<section class="hero" style="background: url(img/hero.jpg); background-size: cover; background-position: center center">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7">
+                <h1>Bootstrap 4 Blog - A free template by Bootstrap Temple</h1><a class="hero-link" href="#">Discover
+                More</a>
+            </div>
+        </div>
+        <a class="continue link-scroll" href=".intro"><i class="fa fa-long-arrow-down"></i> Scroll Down</a>
+    </div>
+</section>
+<!-- Intro Section-->
+<section class="intro">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <h2 class="h3">Some great intro here</h2>
+                <p class="text-big">Place a nice <strong>introduction</strong> here <strong>to catch reader's
+                    attention</strong>. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud nisi ut aliquip
+                    ex ea commodo consequat. Duis aute irure dolor in reprehenderi.</p>
+            </div>
+        </div>
+    </div>
+</section>
+<!--    Featured post section   -->
+<section class="featured-posts no-padding-top">
+    <div class="container" th:if="${!featuredPostList.isEmpty()}">
+        <div th:each="featuredPost:${featuredPostList}">
+            <!--Post-->
+            <div class="row d-flex align-items-stretch">
+                <div class="image col-lg-5" th:if="${featuredPostList.indexOf(featuredPost)%2!=0}"><img alt="..."
+                                                                                                        th:src="@{'/media/thumbnail/'+${featuredPost.thumbnail}}">
+                </div>
+                <div class="text col-lg-7">
+                    <div class="text-inner d-flex align-items-center">
+                        <div class="content">
+                            <header class="post-header">
+                                <div class="category"><a
+                                        th:href="@{/post(category=${featuredPost.getCategory().getCategory().toLowerCase()})}"
+                                        th:text="${featuredPost.getCategory().getCategory()}"></a></div>
+                                <a th:href="@{/post/{postId}(postId=${featuredPost.id})}">
+                                    <h2 class="h4" th:text="${featuredPost.getTitle()}"></h2></a>
+                            </header>
+                            <p th:text="${featuredPost.getDescription()}"></p>
+                            <footer class="post-footer d-flex align-items-center"><a
+                                    class="author d-flex align-items-center flex-wrap"
+                                    href="#">
+                                <div class="avatar"><img alt="..." class="img-fluid"
+                                                         th:src="@{/media/profile/default_profile_image.png}"></div>
+                                <div class="title"><span th:text="${featuredPost.getUser().getFirstName()}"></span>
+                                </div>
+                            </a>
+                                <div class="date"><i class="icon-clock"></i><span
+                                        th:text="${#temporals.format(featuredPost.getCreationDate(), 'dd-MM-yyyy')}"></span>
+                                </div>
+                                <div class="comments"><i class="icon-comment"></i><span
+                                        th:text="${featuredPost.getCommentCount()}"></span></div>
+                            </footer>
+                        </div>
+                    </div>
+                </div>
+                <div class="image col-lg-5" th:if="${featuredPostList.indexOf(featuredPost)%2==0}"><img alt="..."
+                                                                                                        th:src="@{'/media/thumbnail/'+${featuredPost.thumbnail}}">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Divider Section-->
+<section class="divider"
+         style="background: url(img/divider-bg.jpg); background-size: cover; background-position: center bottom">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7">
+                <h2>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
+                    et dolore magna aliqua</h2><a class="hero-link" href="#">View More</a>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Latest Posts -->
+<section class="latest-posts">
+    <div class="container">
+        <header>
+            <h2>Latest from the blog</h2>
+            <p class="text-big">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+        </header>
+
+        <div class="row" th:if="${!latestPostList.isEmpty()}">
+            <div class="post col-md-4" th:each="post:${latestPostList}">
+                <div class="post-thumbnail"><a th:href="@{/post/{postId}(postId=${post.id})}"><img alt="..."
+                                                                                                   class="img-fluid"
+                                                                                                   th:src="@{'/media/thumbnail/'+${post.thumbnail}}"></a>
+                </div>
+                <div class="post-details">
+                    <div class="post-meta d-flex justify-content-between">
+                        <div class="date"><span
+                                th:text="${#temporals.format(post.getCreationDate(), 'dd-MM-yyyy')}"></span></div>
+                        <div class="category"><a
+                                th:href="@{/post(category=${post.getCategory().getCategory().toLowerCase()})}"
+                                th:text="${post.getCategory().getCategory()}"></a></div>
+                    </div>
+                    <a th:href="@{/post/{postId}(postId=${post.id})}">
+                        <h3 class="h4" th:text="${post.title}"></h3></a>
+                    <p class="text-muted" th:text="${post.getDescription()}">
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Newsletter Section-->
+<section class="newsletter no-padding-top">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Subscribe to Newsletter</h2>
+                <p class="text-big">Subscribe to our newsletters and get new article delivered straight into your
+                    inbox</p>
+                <div th:replace="alerts::NewsletterSuccess"></div>
+            </div>
+            <div class="col-md-8">
+                <div class="form-holder">
+                    <form enctype="multipart/form-data" method="post" th:action="@{/newsletter}"
+                          th:object="${newsletter}">
+                        <p th:errorclass="error" th:errors="*{email}"
+                           th:if="${#fields.hasErrors('email')}">
+                        </p>
+                        <div class="form-group">
+                            <input id="email" name="email" placeholder="Type your email address" th:field="*{email}"
+                                   type="email">
+                            <button class="submit" type="submit">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--    footer-->
+<footer th:replace="layouts::footer"></footer>
+<!-- Libs JS -->
+<div th:replace="layouts::JS-Include"></div>
+</body>
+</html>

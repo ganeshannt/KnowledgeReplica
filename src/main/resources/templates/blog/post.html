@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts::head"><title>Knowledge Replica</title></head>
+<style>
+    .error {
+        color: red;
+    }
+
+
+
+
+
+
+
+
+</style>
+<body>
+
+<header th:replace="layouts::navbar"></header>
+<div class="container">
+    <div class="row">
+        <!-- Latest Posts -->
+        <main class="post blog-post col-lg-8">
+            <div class="container">
+                <div class="post-single">
+                    <div class="post-thumbnail">
+                        <img alt="..." class="img-fluid" th:src="@{'/media/thumbnail/'+${post.thumbnail}}"/>
+                    </div>
+                    <div class="post-details">
+                        <div class="post-meta d-flex justify-content-between">
+                            <div class="category"><a
+                                    th:href="@{/post(category=${post.getCategory().getCategory().toLowerCase()})}"
+                                    th:text="${post.getCategory().getCategory()}"></a></div>
+                        </div>
+                        <h1 th:text="${post.title}"><a href="#"><i
+                                class="fa fa-bookmark-o"></i></a></h1>
+                        <div class="post-footer d-flex align-items-center flex-column flex-sm-row"><a
+                                class="author d-flex align-items-center flex-wrap"
+                                href="#">
+                            <div class="avatar"><img alt="..." class="img-fluid"
+                                                     th:src="@{/media/profile/default_profile_image.png}"></div>
+                            <div class="title"><span th:text="${post.getUser().firstName}"></span></div>
+                        </a>
+                            <div class="d-flex align-items-center flex-wrap">
+                                <div class="date"><i class="icon-clock"></i><span
+                                        th:text="${#temporals.format(post.getCreationDate(), 'dd-MM-yyyy')}"></span>
+                                </div>
+                                <div class="views"><i class="icon-eye"></i><span th:text="${post.getViews()}"></span>
+                                </div>
+                                <div class="comments meta-last"><i class="icon-comment"></i><span
+                                        th:text="${post.getCommentCount()}"></span></div>
+                            </div>
+                        </div>
+                        <div class="post-body">
+                            <p class="lead" th:text="${post.getDescription()}"></p>
+                            <p th:utext="${post.getContent()}"></p>
+                        </div>
+                        <div class="posts-nav d-flex justify-content-between align-items-stretch flex-column flex-md-row">
+                            <a class="prev-post text-left d-flex align-items-center"
+                               th:href="@{/post/{postId}(postId=${previousPost.getId()})}"
+                               th:if="${previousPost!=null}">
+                                <div class="icon prev"><i class="fa fa-angle-left"></i></div>
+                                <div class="text"><strong class="text-primary">Previous Post </strong>
+                                    <h6 th:text="${previousPost.getTitle()}"></h6>
+                                </div>
+                            </a>
+                            <a class="next-post text-right d-flex align-items-center justify-content-end"
+                               th:href="@{/post/{postId}(postId=${nextPost.getId()})}" th:if="${nextPost!=null}">
+                                <div class="text"><strong class="text-primary">Next Post </strong>
+                                    <h6 th:text="${nextPost.getTitle()}"></h6>
+                                </div>
+                                <div class="icon next"><i class="fa fa-angle-right"> </i></div>
+                            </a>
+                        </div>
+                        <div class="post-comments">
+                            <header>
+                                <h3 class="h6">Post Comments<span class="no-of-comments"
+                                                                  th:text="${commentList.size()}"></span></h3>
+                            </header>
+                            <div th:if="${!commentList.isEmpty()}">
+                                <div class="comment" th:each="comments:${commentList}">
+                                    <div class="comment-header d-flex justify-content-between">
+                                        <div class="user d-flex align-items-center">
+                                            <div class="image"><img alt="..." class="img-fluid rounded-circle"
+                                                                    th:src="@{/images/profile/default_profile_image.png}">
+                                            </div>
+                                            <div class="title"><strong th:text="${comments.name}"></strong><span
+                                                    class="date"
+                                                    th:text="${#temporals.format(comments.getCreationDate(), 'dd-MM-yyyy')}"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="comment-body">
+                                        <p th:text="${comments.comment}"></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div th:unless="${!commentList.isEmpty()}">
+                                <p>No Comments</p>
+                            </div>
+
+                        </div>
+                        <div class="add-comment">
+                            <header>
+                                <h3 class="h6">Leave a reply</h3>
+                            </header>
+                            <form class="commenting-form" enctype="multipart/form-data" method="post"
+                                  th:action="@{/post/{postId}/comment(postId=${post.id})}" th:object="${comment}">
+                                <div class="row">
+                                    <div sec:authorize="hasAuthority('USER')">
+                                        <input th:name="name"
+                                               th:value="${#session.getAttribute('firstName')}" type="hidden">
+                                    </div>
+                                    <div sec:authorize="isAnonymous()">
+                                        <div class="form-group col-md-12">
+                                            <p th:errorclass="error" th:errors="*{name}"
+                                               th:if="${#fields.hasErrors('name')}"></p>
+                                            <input class="form-control" id="name" name="name" placeholder="Name"
+                                                   th:field="*{name}" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <p th:errorclass="error" th:errors="*{comment}"
+                                           th:if="${#fields.hasErrors('comment')}"></p>
+                                        <textarea class="form-control" id="comment" name="comment"
+                                                  placeholder="Type your comment" th:field="*{comment}"></textarea>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <button class="btn btn-secondary" type="submit">Submit Comment</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <aside th:replace="layouts::sidebar">
+        </aside>
+    </div>
+</div>
+
+<!--    footer-->
+<footer th:replace="layouts::footer"></footer>
+<!-- Libs JS -->
+<div th:replace="layouts::JS-Include"></div>
+</body>
+</html>
