@@ -163,11 +163,7 @@
                 <a th:href="@{/post/{postId}(postId=${post.id})}">
                     <div class="item d-flex align-items-center">
                         <div class="image">
-                            <img
-                                    alt="..."
-                                    class="img-fluid"
-                                    th:src="@{'/images/thumbnail/'+${post.thumbnail}}"
-                            />
+                            <img alt="..." class="img-fluid" th:src="@{'/media/thumbnail/'+${post.thumbnail}}"/>
                         </div>
                         <div class="title">
                             <strong><span th:text="${post.title}"></span></strong>
