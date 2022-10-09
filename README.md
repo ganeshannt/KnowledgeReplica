@@ -1,10 +1,10 @@
-# KnowledgeReplica
-Article platform to share your knowledge
+# KnowledgeReplica :books:
+Article platform to share your knowledge.created this project while learning spring boot. It might not be perfect sample spring mvc project :relieved: but still beginner can explore and learn from it hence sharing here.
 
 [![Java Version](https://img.shields.io/badge/java-11-brightgreen.svg)](https://jdk.java.net/11)
 [![Spring boot Version](https://img.shields.io/badge/SpringBoot-2.5.6-brightred.svg)](https://spring.io/projects/spring-boot)
 
-### Contributions are welcome 
+### Contributions are welcome :heart_eyes:
 
 ## Requirements
 
@@ -14,7 +14,7 @@ For building and running the application you need:
 - [Maven 3](https://maven.apache.org)
 
 
-## Running the application locally
+## Running the application locally :computer:
 
 First, clone the repository to your local machine:
 
