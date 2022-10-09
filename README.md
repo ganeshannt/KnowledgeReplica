@@ -4,7 +4,7 @@ Article platform to share your knowledge
 [![Java Version](https://img.shields.io/badge/java-11-brightgreen.svg)](https://jdk.java.net/11)
 [![Spring boot Version](https://img.shields.io/badge/SpringBoot-2.5.6-brightred.svg)](https://spring.io/projects/spring-boot)
 
-### Contributions are welcome
+### Contributions are welcome 
 
 ## Requirements
 
@@ -40,3 +40,8 @@ mvn spring-boot:run
 ```
 
 The web application is accessible via `localhost:8080`
+
+## Demo :fire:
+
+[![Demo video](https://i.postimg.cc/MHJGSWX6/Screenshot-2022-10-09-at-2-58-27-PM.png)](https://youtu.be/DLW1YUFg8kQ)
+
