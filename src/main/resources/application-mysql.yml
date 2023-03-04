@@ -15,8 +15,9 @@ spring:
       initialize-schema: always
       table-name: SPRING_SESSION
   flyway:
-    baseline-on-migrate: true
+    baselineOnMigrate: true
     enabled: true
+    locations: classpath:db/migration/mysql
 
   # Thymeleaf Cache disabled
   thymeleaf:
@@ -39,11 +40,3 @@ spring:
             enable: false
           timeout: 3000
           writetimeout: 5000
-
-  # Image upload configuration
-  servlet:
-    multipart:
-      enabled: true
-      file-size-threshold: 2KB
-      max-file-size: 10MB
-      max-request-size: 20MB

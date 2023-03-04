@@ -1,0 +1,62 @@
+spring:
+  groovy:
+    template:
+      cache: false
+  #      H2 Configuration
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  session:
+    store-type: jdbc
+    timeout: 100000
+    jdbc:
+      initialize-schema: embedded
+      table-name: SPRING_SESSION
+  jpa:
+    generate-ddl: true
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: none
+    database: h2
+    database-platform: org.hibernate.dialect.H2Dialect
+  datasource:
+    username: root
+    password: h2@123
+    url: jdbc:h2:mem:KRDB;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MYSQL;DATABASE_TO_UPPER=false;
+    driver-class-name: org.h2.Driver
+  flyway:
+    baselineOnMigrate: true
+    enabled: true
+    locations: classpath:db/migration/h2
+
+  # Thymeleaf Cache disabled
+  thymeleaf:
+    cache: false
+
+  #Mail configuration
+  mail:
+    host: localhost
+    username: hello
+    password: hello
+    port: 1025
+    properties:
+      mail:
+        smtp:
+          auth: true
+          connectiontimeout: 5000
+          ssl:
+            trust: '"*"'
+          starttls:
+            enable: false
+          timeout: 3000
+          writetimeout: 5000
+
+site:
+  base:
+    url: http://localhost:8080
+
+

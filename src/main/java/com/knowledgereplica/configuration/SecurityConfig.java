@@ -44,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web
                 .ignoring()
-                .antMatchers("/h2-console/**", "/media/thumbnail/**", "/media/profile/**", "/resources/**", "/static/**", "/css/**", "/img/**", "/images/**", "/icons-reference/**", "/fonts/**", "/vendor/**", "/js/**");
+                .antMatchers("/actuator/**","/h2-console/**", "/media/thumbnail/**", "/media/profile/**", "/resources/**", "/static/**", "/css/**", "/img/**", "/images/**", "/icons-reference/**", "/fonts/**", "/vendor/**", "/js/**");
     }
 
     @Override
