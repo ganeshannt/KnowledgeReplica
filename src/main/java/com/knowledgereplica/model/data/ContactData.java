@@ -2,8 +2,8 @@ package com.knowledgereplica.model.data;
 
 import com.knowledgereplica.model.UserEntity;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
 public class ContactData implements Serializable {

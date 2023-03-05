@@ -7,7 +7,7 @@ import com.knowledgereplica.model.UserEntity;
 import com.knowledgereplica.model.data.ResetPasswordData;
 import com.knowledgereplica.model.data.UserData;
 
-import javax.mail.MessagingException;
+import jakarta.mail.MessagingException;
 
 public interface AuthenticationService {
     public void register(UserData userData) throws UserAlreadyExistException, MessagingException;

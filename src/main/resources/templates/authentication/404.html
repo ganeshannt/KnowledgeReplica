@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layouts::head"><title>Knowledge Replica</title></head>
+<head th:replace="~{layouts::head}"><title>Knowledge Replica</title></head>
 <body>
 
-<header th:replace="layouts::navbar"></header>
+<header th:replace="~{layouts::navbar}"></header>
 
 <!-- 404 section -->
 
@@ -25,8 +25,8 @@
 
 </div>
 <!--    footer-->
-<footer th:replace="layouts::footer"></footer>
+<footer th:replace="~{layouts::footer}"></footer>
 <!-- Libs JS -->
-<div th:replace="layouts::JS-Include"></div>
+<div th:replace="~{layouts::JS-Include}"></div>
 </body>
 </html>

@@ -26,7 +26,7 @@ public class DefaultTokenServiceImpl implements TokenService {
 
     @Override
     public TokenEntity createToken() {
-        String tokenValue = new String(Base64.encodeBase64URLSafe(DEFAULT_TOKEN_GENERATOR.generateKey()));
+        String tokenValue = new String(Base64.encodeBase64URLSafeString(DEFAULT_TOKEN_GENERATOR.generateKey()));
         TokenEntity tokenEntity = new TokenEntity();
         tokenEntity.setToken(tokenValue);
         tokenEntity.setCreatedAt(LocalDateTime.now());

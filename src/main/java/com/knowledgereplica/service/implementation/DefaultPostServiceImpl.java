@@ -61,7 +61,7 @@ public class DefaultPostServiceImpl implements PostService {
 
     @Override
     public PostEntity getPostByIdAndUpdateViews(long id) {
-        PostEntity postEntity = postRepository.getById(id);
+        PostEntity postEntity = postRepository.findById(id).orElseThrow();
         postEntity.setViews(postEntity.getViews() + 1);
         postRepository.save(postEntity);
         return postEntity;
