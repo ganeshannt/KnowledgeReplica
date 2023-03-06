@@ -9,6 +9,8 @@ import com.knowledgereplica.model.data.ContactData;
 import com.knowledgereplica.model.data.NewsLetterData;
 import com.knowledgereplica.service.ContactService;
 import com.knowledgereplica.service.PostService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -28,7 +30,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.thymeleaf.util.StringUtils;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -64,6 +66,10 @@ public class HomeController {
         return INDEX_PAGE;
     }
 
+    @ModelAttribute("contextPath")
+    public String contextPath(final HttpServletRequest request) {
+        return request.getContextPath();
+    }
     @GetMapping("/contact")
     public String getContactPage(Model model) {
         model.addAttribute(CONTACT, new ContactData());
@@ -172,5 +178,10 @@ public class HomeController {
     protected Set<PostEntity> getPostByCategory(String category) {
         CategoryEntity categoryEntity = postService.getCategoryById(category);
         return categoryEntity.getPosts();
+    }
+
+    @ModelAttribute("session_firstname")
+    public String session(final HttpServletRequest request) {
+        return (String) request.getSession().getAttribute("firstName");
     }
 }

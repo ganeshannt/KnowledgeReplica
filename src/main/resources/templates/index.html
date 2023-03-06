@@ -1,23 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 >
-<head th:replace="layouts::head"><title>Knowledge Replica</title></head>
+<head th:replace="~{layouts::head}"><title>Knowledge Replica</title></head>
 <style>
     .error {
         color: red;
     }
-
-
-
-
-
-
-
-
 </style>
 <body>
 
-<header th:replace="layouts::navbar"></header>
+<header th:replace="~{layouts::navbar}"></header>
 <!-- Hero Section-->
 <section class="hero" style="background: url(img/hero.jpg); background-size: cover; background-position: center center">
     <div class="container">
@@ -163,8 +155,8 @@
 </section>
 
 <!--    footer-->
-<footer th:replace="layouts::footer"></footer>
+<footer th:replace="~{layouts::footer}"></footer>
 <!-- Libs JS -->
-<div th:replace="layouts::JS-Include"></div>
+<div th:replace="~{layouts::JS-Include}"></div>
 </body>
 </html>

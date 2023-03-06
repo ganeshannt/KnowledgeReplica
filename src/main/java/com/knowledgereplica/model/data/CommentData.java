@@ -1,6 +1,6 @@
 package com.knowledgereplica.model.data;
 
-import javax.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
 public class CommentData implements Serializable {

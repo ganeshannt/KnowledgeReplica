@@ -1,23 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layouts::head"><title>Knowledge Replica</title></head>
+<head th:replace="~{layouts::head}"><title>Knowledge Replica</title></head>
+
 <style>
     .error {
         color: red;
     }
-
-
-
-
-
-
-
-
 </style>
 <body>
 
-<header th:replace="layouts::navbar"></header>
+<header th:replace="~{layouts::navbar}"></header>
 <div class="container">
     <div class="row">
         <!-- Latest Posts -->
@@ -110,7 +103,7 @@
                                 <div class="row">
                                     <div sec:authorize="hasAuthority('USER')">
                                         <input th:name="name"
-                                               th:value="${#session.getAttribute('firstName')}" type="hidden">
+                                               th:value="${session_firstname}" type="hidden">
                                     </div>
                                     <div sec:authorize="isAnonymous()">
                                         <div class="form-group col-md-12">
@@ -142,8 +135,8 @@
 </div>
 
 <!--    footer-->
-<footer th:replace="layouts::footer"></footer>
+<footer th:replace="~{layouts::footer}"></footer>
 <!-- Libs JS -->
-<div th:replace="layouts::JS-Include"></div>
+<div th:replace="~{layouts::JS-Include}"></div>
 </body>
 </html>
