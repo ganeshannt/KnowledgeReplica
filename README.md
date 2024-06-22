@@ -1,8 +1,8 @@
 # KnowledgeReplica :books:
 Article platform to share your knowledge.created this project while learning spring boot. It might not be perfect sample spring mvc project :relieved: but still beginner can explore and learn from it hence sharing here.
 
-[![Java Version](https://img.shields.io/badge/java-11-brightgreen.svg)](https://jdk.java.net/11)
-[![Spring boot Version](https://img.shields.io/badge/SpringBoot-2.5.6-brightred.svg)](https://spring.io/projects/spring-boot)
+[![Java Version](https://img.shields.io/badge/java-21-brightgreen.svg)](https://jdk.java.net/21)
+[![Spring boot Version](https://img.shields.io/badge/SpringBoot-3.2.7-brightred.svg)](https://spring.io/projects/spring-boot)
 
 ### Contributions are welcome :heart_eyes:
 
@@ -10,7 +10,7 @@ Article platform to share your knowledge.created this project while learning spr
 
 For building and running the application you need:
 
-- [JDK 11](https://jdk.java.net/11)
+- [JDK 21](https://jdk.java.net/21)
 - [Maven 3](https://maven.apache.org)
 
 
