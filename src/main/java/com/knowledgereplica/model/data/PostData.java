@@ -1,59 +1,62 @@
 package com.knowledgereplica.model.data;
 
 import com.knowledgereplica.model.CategoryEntity;
-
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
 
 public class PostData implements Serializable {
-    @NotEmpty(message = "{post.validation.title}")
-    private String title;
-    @NotEmpty(message = "{post.validation.title}")
-    private String description;
-    @NotNull(message = "{post.validation.category}")
-    private CategoryEntity category;
-    private String thumbnail;
-    @NotEmpty(message = "{post.validation.content}")
-    private String content;
+  @NotEmpty(message = "{post.validation.title}")
+  private String title;
 
-    public String getThumbnail() {
-        return thumbnail;
-    }
+  @NotEmpty(message = "{post.validation.title}")
+  private String description;
 
-    public void setThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail;
-    }
+  @NotNull(message = "{post.validation.category}")
+  private CategoryEntity category;
 
-    public String getTitle() {
-        return title;
-    }
+  private String thumbnail;
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+  @NotEmpty(message = "{post.validation.content}")
+  private String content;
 
-    public String getContent() {
-        return content;
-    }
+  public String getThumbnail() {
+    return thumbnail;
+  }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
+  public void setThumbnail(String thumbnail) {
+    this.thumbnail = thumbnail;
+  }
 
-    public CategoryEntity getCategory() {
-        return category;
-    }
+  public String getTitle() {
+    return title;
+  }
 
-    public void setCategory(CategoryEntity category) {
-        this.category = category;
-    }
+  public void setTitle(String title) {
+    this.title = title;
+  }
 
-    public String getDescription() {
-        return description;
-    }
+  public String getContent() {
+    return content;
+  }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+  public void setContent(String content) {
+    this.content = content;
+  }
+
+  public CategoryEntity getCategory() {
+    return category;
+  }
+
+  public void setCategory(CategoryEntity category) {
+    this.category = category;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
 }

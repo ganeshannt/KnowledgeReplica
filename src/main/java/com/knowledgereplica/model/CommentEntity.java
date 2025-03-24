@@ -1,8 +1,5 @@
 package com.knowledgereplica.model;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,80 +11,84 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name = "comment")
 public class CommentEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    private String name;
-    @Lob
-    private String comment;
-    @ManyToOne
-    @JoinColumn(name = "post_id", referencedColumnName = "id")
-    private PostEntity post;
-    @Column(updatable = false)
-    @CreationTimestamp
-    private Timestamp createdAt;
-    @UpdateTimestamp
-    private Timestamp updatedAt;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private long id;
 
-    public long getId() {
-        return id;
-    }
+  private String name;
+  @Lob private String comment;
 
-    public void setId(long id) {
-        this.id = id;
-    }
+  @ManyToOne
+  @JoinColumn(name = "post_id", referencedColumnName = "id")
+  private PostEntity post;
 
-    public String getName() {
-        return name;
-    }
+  @Column(updatable = false)
+  @CreationTimestamp
+  private Timestamp createdAt;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  @UpdateTimestamp private Timestamp updatedAt;
 
-    public PostEntity getPost() {
-        return post;
-    }
+  public long getId() {
+    return id;
+  }
 
-    public void setPost(PostEntity post) {
-        this.post = post;
-    }
+  public void setId(long id) {
+    this.id = id;
+  }
 
-    public String getComment() {
-        return comment;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public Timestamp getCreatedAt() {
-        return createdAt;
-    }
+  public PostEntity getPost() {
+    return post;
+  }
 
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
-    }
+  public void setPost(PostEntity post) {
+    this.post = post;
+  }
 
-    public Timestamp getUpdatedAt() {
-        return updatedAt;
-    }
+  public String getComment() {
+    return comment;
+  }
 
-    public void setUpdatedAt(Timestamp updatedAt) {
-        this.updatedAt = updatedAt;
-    }
+  public void setComment(String comment) {
+    this.comment = comment;
+  }
 
-    public LocalDate getCreationDate() {
-        Timestamp date = this.createdAt;
-        return date.toLocalDateTime().toLocalDate();
-    }
+  public Timestamp getCreatedAt() {
+    return createdAt;
+  }
 
-    public LocalDate getUpdationDate() {
-        Timestamp date = this.updatedAt;
-        return date.toLocalDateTime().toLocalDate();
-    }
+  public void setCreatedAt(Timestamp createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public Timestamp getUpdatedAt() {
+    return updatedAt;
+  }
+
+  public void setUpdatedAt(Timestamp updatedAt) {
+    this.updatedAt = updatedAt;
+  }
+
+  public LocalDate getCreationDate() {
+    Timestamp date = this.createdAt;
+    return date.toLocalDateTime().toLocalDate();
+  }
+
+  public LocalDate getUpdationDate() {
+    Timestamp date = this.updatedAt;
+    return date.toLocalDateTime().toLocalDate();
+  }
 }

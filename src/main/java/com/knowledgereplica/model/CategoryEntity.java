@@ -10,46 +10,45 @@ import java.util.Set;
 @Entity
 @Table(name = "category")
 public class CategoryEntity {
-    @Id
-    private String category;
-    private String name;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
-    private Set<PostEntity> posts;
+  @Id private String category;
+  private String name;
 
-    public CategoryEntity(String category, String name, Set<PostEntity> posts) {
-        this.category = category;
-        this.name = name;
-        this.posts = posts;
-    }
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+  private Set<PostEntity> posts;
 
-    public CategoryEntity() {
-    }
+  public CategoryEntity(String category, String name, Set<PostEntity> posts) {
+    this.category = category;
+    this.name = name;
+    this.posts = posts;
+  }
 
-    public String getCategory() {
-        return category;
-    }
+  public CategoryEntity() {}
 
-    public void setCategory(String category) {
-        this.category = category;
-    }
+  public String getCategory() {
+    return category;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public void setCategory(String category) {
+    this.category = category;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public Set<PostEntity> getPosts() {
-        return posts;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public void setPosts(Set<PostEntity> posts) {
-        this.posts = posts;
-    }
+  public Set<PostEntity> getPosts() {
+    return posts;
+  }
 
-    public int getPostCount() {
-        return this.posts.size();
-    }
+  public void setPosts(Set<PostEntity> posts) {
+    this.posts = posts;
+  }
+
+  public int getPostCount() {
+    return this.posts.size();
+  }
 }

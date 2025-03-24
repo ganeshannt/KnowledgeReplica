@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TokenRepository extends JpaRepository<TokenEntity, Long> {
-    public void deleteByToken(String token);
+  public void deleteByToken(String token);
 
-    public TokenEntity getByToken(String token);
+  public TokenEntity getByToken(String token);
 }

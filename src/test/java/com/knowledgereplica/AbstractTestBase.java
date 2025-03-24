@@ -8,8 +8,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @SpringBootTest
 @AutoConfigureMockMvc
 public abstract class AbstractTestBase {
-    @Autowired
-    protected MockMvc mockMvc;
+  @Autowired protected MockMvc mockMvc;
 
-    protected String baseUrl = "http://localhost";
+  protected String baseUrl = "http://localhost";
 }

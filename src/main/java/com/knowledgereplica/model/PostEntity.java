@@ -1,150 +1,148 @@
 package com.knowledgereplica.model;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
 import jakarta.persistence.*;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Set;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name = "post")
 public class PostEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    private String title;
-    @Lob
-    private String description;
-    private String thumbnail;
-    @Lob
-    private String content;
-    private long views;
-    @ManyToOne
-    private CategoryEntity category;
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private UserEntity user;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
-    private Set<CommentEntity> comments;
-    @Column(updatable = false)
-    @CreationTimestamp
-    private Timestamp createdAt;
-    @UpdateTimestamp
-    private Timestamp updatedAt;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private long id;
 
+  private String title;
+  @Lob private String description;
+  private String thumbnail;
+  @Lob private String content;
+  private long views;
+  @ManyToOne private CategoryEntity category;
 
-    public PostEntity() {
-    }
+  @ManyToOne
+  @JoinColumn(name = "user_id", referencedColumnName = "id")
+  private UserEntity user;
 
-    public PostEntity(long id, String title, String thumbnail, String content, UserEntity user) {
-        this.id = id;
-        this.title = title;
-        this.thumbnail = thumbnail;
-        this.content = content;
-        this.user = user;
-    }
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
+  private Set<CommentEntity> comments;
 
-    public String getThumbnail() {
-        return thumbnail;
-    }
+  @Column(updatable = false)
+  @CreationTimestamp
+  private Timestamp createdAt;
 
-    public void setThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail;
-    }
+  @UpdateTimestamp private Timestamp updatedAt;
 
-    public long getId() {
-        return id;
-    }
+  public PostEntity() {}
 
-    public void setId(long id) {
-        this.id = id;
-    }
+  public PostEntity(long id, String title, String thumbnail, String content, UserEntity user) {
+    this.id = id;
+    this.title = title;
+    this.thumbnail = thumbnail;
+    this.content = content;
+    this.user = user;
+  }
 
-    public String getTitle() {
-        return title;
-    }
+  public String getThumbnail() {
+    return thumbnail;
+  }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+  public void setThumbnail(String thumbnail) {
+    this.thumbnail = thumbnail;
+  }
 
-    public String getContent() {
-        return content;
-    }
+  public long getId() {
+    return id;
+  }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
+  public void setId(long id) {
+    this.id = id;
+  }
 
-    public UserEntity getUser() {
-        return user;
-    }
+  public String getTitle() {
+    return title;
+  }
 
-    public void setUser(UserEntity user) {
-        this.user = user;
-    }
+  public void setTitle(String title) {
+    this.title = title;
+  }
 
-    public Timestamp getCreatedAt() {
-        return createdAt;
-    }
+  public String getContent() {
+    return content;
+  }
 
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
-    }
+  public void setContent(String content) {
+    this.content = content;
+  }
 
-    public Timestamp getUpdatedAt() {
-        return updatedAt;
-    }
+  public UserEntity getUser() {
+    return user;
+  }
 
-    public void setUpdatedAt(Timestamp updatedAt) {
-        this.updatedAt = updatedAt;
-    }
+  public void setUser(UserEntity user) {
+    this.user = user;
+  }
 
-    public Set<CommentEntity> getComments() {
-        return comments;
-    }
+  public Timestamp getCreatedAt() {
+    return createdAt;
+  }
 
-    public void setComments(Set<CommentEntity> comments) {
-        this.comments = comments;
-    }
+  public void setCreatedAt(Timestamp createdAt) {
+    this.createdAt = createdAt;
+  }
 
-    public long getViews() {
-        return views;
-    }
+  public Timestamp getUpdatedAt() {
+    return updatedAt;
+  }
 
-    public void setViews(long views) {
-        this.views = views;
-    }
+  public void setUpdatedAt(Timestamp updatedAt) {
+    this.updatedAt = updatedAt;
+  }
 
-    public CategoryEntity getCategory() {
-        return category;
-    }
+  public Set<CommentEntity> getComments() {
+    return comments;
+  }
 
-    public void setCategory(CategoryEntity category) {
-        this.category = category;
-    }
+  public void setComments(Set<CommentEntity> comments) {
+    this.comments = comments;
+  }
 
-    public int getCommentCount() {
-        return this.comments.size();
-    }
+  public long getViews() {
+    return views;
+  }
 
-    public String getDescription() {
-        return description;
-    }
+  public void setViews(long views) {
+    this.views = views;
+  }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+  public CategoryEntity getCategory() {
+    return category;
+  }
 
-    public LocalDate getCreationDate() {
-        Timestamp date = this.createdAt;
-        return date.toLocalDateTime().toLocalDate();
-    }
+  public void setCategory(CategoryEntity category) {
+    this.category = category;
+  }
 
-    public LocalDate getUpdationDate() {
-        Timestamp date = this.updatedAt;
-        return date.toLocalDateTime().toLocalDate();
-    }
+  public int getCommentCount() {
+    return this.comments.size();
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public LocalDate getCreationDate() {
+    Timestamp date = this.createdAt;
+    return date.toLocalDateTime().toLocalDate();
+  }
+
+  public LocalDate getUpdationDate() {
+    Timestamp date = this.updatedAt;
+    return date.toLocalDateTime().toLocalDate();
+  }
 }

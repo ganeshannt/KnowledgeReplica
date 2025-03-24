@@ -5,19 +5,18 @@ import com.knowledgereplica.model.NewsLetterEntity;
 import com.knowledgereplica.model.PostEntity;
 import com.knowledgereplica.model.data.ContactData;
 import com.knowledgereplica.model.data.NewsLetterData;
-
 import java.util.List;
 
 public interface ContactService {
-    void saveContact(ContactData contactData);
+  void saveContact(ContactData contactData);
 
-    List<ContactEntity> getAllContacts();
+  List<ContactEntity> getAllContacts();
 
-    void saveNewsLetter(NewsLetterData newsLetterData);
+  void saveNewsLetter(NewsLetterData newsLetterData);
 
-    List<NewsLetterEntity> getAllNewsLetter();
+  List<NewsLetterEntity> getAllNewsLetter();
 
-    String[] getAllNewsLetterEmail();
+  String[] getAllNewsLetterEmail();
 
-    void sendPostUpdateEmail(PostEntity post);
+  void sendPostUpdateEmail(PostEntity post);
 }

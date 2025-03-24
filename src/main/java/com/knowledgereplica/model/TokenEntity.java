@@ -12,57 +12,60 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "token")
 public class TokenEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String token;
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private UserEntity user;
-    private LocalDateTime createdAt;
-    private LocalDateTime expireAt;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    public Long getId() {
-        return id;
-    }
+  private String token;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+  @ManyToOne
+  @JoinColumn(name = "user_id", referencedColumnName = "id")
+  private UserEntity user;
 
-    public String getToken() {
-        return token;
-    }
+  private LocalDateTime createdAt;
+  private LocalDateTime expireAt;
 
-    public void setToken(String token) {
-        this.token = token;
-    }
+  public Long getId() {
+    return id;
+  }
 
-    public UserEntity getUser() {
-        return user;
-    }
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-    public void setUser(UserEntity user) {
-        this.user = user;
-    }
+  public String getToken() {
+    return token;
+  }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
+  public void setToken(String token) {
+    this.token = token;
+  }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
+  public UserEntity getUser() {
+    return user;
+  }
 
-    public LocalDateTime getExpireAt() {
-        return expireAt;
-    }
+  public void setUser(UserEntity user) {
+    this.user = user;
+  }
 
-    public void setExpireAt(LocalDateTime expireAt) {
-        this.expireAt = expireAt;
-    }
+  public LocalDateTime getCreatedAt() {
+    return createdAt;
+  }
 
-    public boolean isExpired() {
-        return !LocalDateTime.now().isBefore(this.expireAt);
-    }
+  public void setCreatedAt(LocalDateTime createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public LocalDateTime getExpireAt() {
+    return expireAt;
+  }
+
+  public void setExpireAt(LocalDateTime expireAt) {
+    this.expireAt = expireAt;
+  }
+
+  public boolean isExpired() {
+    return !LocalDateTime.now().isBefore(this.expireAt);
+  }
 }

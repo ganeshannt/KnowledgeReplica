@@ -6,10 +6,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class AdditionalResourceWebConfiguration implements WebMvcConfigurer {
-    @Override
-    public void addResourceHandlers(final ResourceHandlerRegistry registry) {
-        registry
-                .addResourceHandler("/media/thumbnail/**", "/media/profile/**")
-                .addResourceLocations("file:media/thumbnail/", "file:media/profile/");
-    }
+  @Override
+  public void addResourceHandlers(final ResourceHandlerRegistry registry) {
+    registry
+        .addResourceHandler("/media/thumbnail/**", "/media/profile/**")
+        .addResourceLocations("file:media/thumbnail/", "file:media/profile/");
+  }
 }

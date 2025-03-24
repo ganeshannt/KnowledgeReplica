@@ -11,6 +11,10 @@ import com.knowledgereplica.util.AppUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import java.io.IOException;
+import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -24,143 +28,166 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.thymeleaf.util.StringUtils;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
-
 @Controller
 @RequestMapping("/account/user")
 public class UserController {
 
-    private static final String CREATE_POST_PAGE = "user/create_post";
-    private static final String UPDATE_POST_PAGE = "user/update_post";
-    private static final String REDIRECT_CREATE_POST = "redirect:/account/user/post";
-    private static final String REDIRECT_USER_HOME = "redirect:/account/user/home";
+  private static final String CREATE_POST_PAGE = "user/create_post";
+  private static final String UPDATE_POST_PAGE = "user/update_post";
+  private static final String REDIRECT_CREATE_POST = "redirect:/account/user/post";
+  private static final String REDIRECT_USER_HOME = "redirect:/account/user/home";
 
-    @Autowired
-    UserService userService;
+  @Autowired UserService userService;
 
-    @Autowired
-    AuthenticationService authenticationService;
+  @Autowired AuthenticationService authenticationService;
 
-    @Autowired
-    PostService postService;
+  @Autowired PostService postService;
 
-    @Autowired
-    MessageSource messageSource;
+  @Autowired MessageSource messageSource;
 
-    @PostMapping("/post/publish")
-    public String createPost(@Valid @ModelAttribute("post") PostData postData, BindingResult bindingResult, @RequestParam("thumbnail") MultipartFile multipartFile, final Model model, RedirectAttributes redirectAttributes, HttpServletRequest httpServletRequest) {
-        HttpSession httpSession = httpServletRequest.getSession();
-        UserEntity user = null;
-        try {
-            user = authenticationService.getUserByEmail((String) httpSession.getAttribute("email"));
-        } catch (EmailNotFoundException e) {
-            return "redirect:/authenticate/login";
-        }
-        try {
-            String filename = UUID.randomUUID().toString() + "." + multipartFile.getContentType().split("/")[1];
-            postData.setThumbnail(filename);
-            AppUtils.saveFile(filename, multipartFile);
-        } catch (Exception e) {
-            e.printStackTrace();
-            redirectAttributes.addFlashAttribute("thumbnailUploadFailed", messageSource.getMessage("post.thumbnail.upload.failed", null, LocaleContextHolder.getLocale()));
-            return REDIRECT_CREATE_POST;
-        }
-        userService.createPost(postData, user);
-        redirectAttributes.addFlashAttribute("postCreationSuccess", messageSource.getMessage("post.created", null, LocaleContextHolder.getLocale()));
-        return REDIRECT_USER_HOME;
+  @PostMapping("/post/publish")
+  public String createPost(
+      @Valid @ModelAttribute("post") PostData postData,
+      BindingResult bindingResult,
+      @RequestParam("thumbnail") MultipartFile multipartFile,
+      final Model model,
+      RedirectAttributes redirectAttributes,
+      HttpServletRequest httpServletRequest) {
+    HttpSession httpSession = httpServletRequest.getSession();
+    UserEntity user = null;
+    try {
+      user = authenticationService.getUserByEmail((String) httpSession.getAttribute("email"));
+    } catch (EmailNotFoundException e) {
+      return "redirect:/authenticate/login";
     }
-
-    @GetMapping("/home")
-    public String getUserIndexPage(final Model model, HttpServletRequest httpServletRequest) {
-        Authentication authenticatedUser = SecurityContextHolder.getContext().getAuthentication();
-        String email = authenticatedUser.getName();
-        HttpSession session = httpServletRequest.getSession();
-        UserEntity user = null;
-        try {
-            user = authenticationService.getUserByEmail(email);
-        } catch (EmailNotFoundException e) {
-            return "redirect:/authenticate/login";
-        }
-        if (Objects.isNull(session.getAttribute("email"))) {
-            session.setAttribute("email", email);
-            session.setAttribute("firstName", user.getFirstName());
-            session.setAttribute("lastName", user.getLastName());
-            session.setAttribute("userId", user.getId());
-        }
-        List<PostEntity> postEntityList = userService.getAllPostByUser(user);
-        model.addAttribute("postList", postEntityList);
-        return "user/home";
+    try {
+      String filename =
+          UUID.randomUUID().toString() + "." + multipartFile.getContentType().split("/")[1];
+      postData.setThumbnail(filename);
+      AppUtils.saveFile(filename, multipartFile);
+    } catch (Exception e) {
+      e.printStackTrace();
+      redirectAttributes.addFlashAttribute(
+          "thumbnailUploadFailed",
+          messageSource.getMessage(
+              "post.thumbnail.upload.failed", null, LocaleContextHolder.getLocale()));
+      return REDIRECT_CREATE_POST;
     }
+    userService.createPost(postData, user);
+    redirectAttributes.addFlashAttribute(
+        "postCreationSuccess",
+        messageSource.getMessage("post.created", null, LocaleContextHolder.getLocale()));
+    return REDIRECT_USER_HOME;
+  }
 
-    @PostMapping("/post/update/{postId}")
-    public String updatePost(@Valid @ModelAttribute("postData") PostData postData, BindingResult bindingResult, @PathVariable("postId") long postId, @RequestParam("thumbnail") MultipartFile multipartFile, Model model, RedirectAttributes redirectAttributes, HttpServletRequest httpServletRequest) {
-
-        PostEntity postEntity = postService.getPostById(postId);
-        postEntity.setTitle(postData.getTitle());
-        postEntity.setContent(postData.getContent());
-        postEntity.setCategory(postData.getCategory());
-        if (!StringUtils.isEmpty(postData.getThumbnail())) {
-            postEntity.setThumbnail(postData.getThumbnail());
-        } else {
-            try {
-                AppUtils.deleteFile(postEntity.getThumbnail());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        redirectAttributes.addFlashAttribute("postUpdateSuccessMessage", messageSource.getMessage("post.updated", null, LocaleContextHolder.getLocale()));
-        postService.savePost(postEntity);
-        return REDIRECT_USER_HOME;
+  @GetMapping("/home")
+  public String getUserIndexPage(final Model model, HttpServletRequest httpServletRequest) {
+    Authentication authenticatedUser = SecurityContextHolder.getContext().getAuthentication();
+    String email = authenticatedUser.getName();
+    HttpSession session = httpServletRequest.getSession();
+    UserEntity user = null;
+    try {
+      user = authenticationService.getUserByEmail(email);
+    } catch (EmailNotFoundException e) {
+      return "redirect:/authenticate/login";
     }
-
-    @GetMapping("/post/update/{postId}")
-    public String getUpdatePostPage(@PathVariable("postId") long postId, final Model model, RedirectAttributes redirectAttributes) {
-        PostEntity postUpdate = postService.getPostById(postId);
-        if (AppUtils.isValidUserRequest(postUpdate.getUser())) {
-            redirectAttributes.addFlashAttribute("userAccessDenied", messageSource.getMessage("user.access.denied", null, LocaleContextHolder.getLocale()));
-            return REDIRECT_USER_HOME;
-        }
-        model.addAttribute("categoryList", postService.getAllCategory());
-        model.addAttribute("postUpdate", postUpdate);
-        model.addAttribute("postData", new PostData());
-        return UPDATE_POST_PAGE;
+    if (Objects.isNull(session.getAttribute("email"))) {
+      session.setAttribute("email", email);
+      session.setAttribute("firstName", user.getFirstName());
+      session.setAttribute("lastName", user.getLastName());
+      session.setAttribute("userId", user.getId());
     }
+    List<PostEntity> postEntityList = userService.getAllPostByUser(user);
+    model.addAttribute("postList", postEntityList);
+    return "user/home";
+  }
 
-    @GetMapping("/post/delete/{postId}")
-    public String deletePost(@PathVariable("postId") long postId, final Model model, RedirectAttributes redirectAttributes) {
-        PostEntity post = postService.getPostById(postId);
-        if (AppUtils.isValidUserRequest(post.getUser())) {
-            try {
-                AppUtils.deleteFile(post.getThumbnail());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            postService.removePost(post);
-            redirectAttributes.addFlashAttribute("postDeleteSuccessMessage", messageSource.getMessage("post.deleted", null, LocaleContextHolder.getLocale()));
-        } else {
-            redirectAttributes.addFlashAttribute("userAccessDenied", messageSource.getMessage("user.access.denied", null, LocaleContextHolder.getLocale()));
-        }
-        return REDIRECT_USER_HOME;
-    }
+  @PostMapping("/post/update/{postId}")
+  public String updatePost(
+      @Valid @ModelAttribute("postData") PostData postData,
+      BindingResult bindingResult,
+      @PathVariable("postId") long postId,
+      @RequestParam("thumbnail") MultipartFile multipartFile,
+      Model model,
+      RedirectAttributes redirectAttributes,
+      HttpServletRequest httpServletRequest) {
 
-    @GetMapping("/post")
-    public String getCreatePostPage(Model model) {
-        model.addAttribute("post", new PostData());
-        model.addAttribute("categoryList", postService.getAllCategory());
-        return CREATE_POST_PAGE;
+    PostEntity postEntity = postService.getPostById(postId);
+    postEntity.setTitle(postData.getTitle());
+    postEntity.setContent(postData.getContent());
+    postEntity.setCategory(postData.getCategory());
+    if (!StringUtils.isEmpty(postData.getThumbnail())) {
+      postEntity.setThumbnail(postData.getThumbnail());
+    } else {
+      try {
+        AppUtils.deleteFile(postEntity.getThumbnail());
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
     }
+    redirectAttributes.addFlashAttribute(
+        "postUpdateSuccessMessage",
+        messageSource.getMessage("post.updated", null, LocaleContextHolder.getLocale()));
+    postService.savePost(postEntity);
+    return REDIRECT_USER_HOME;
+  }
 
-    @GetMapping("/post/single")
-    public String getSinglePost(Model model) {
-        return "blog/blog";
+  @GetMapping("/post/update/{postId}")
+  public String getUpdatePostPage(
+      @PathVariable("postId") long postId,
+      final Model model,
+      RedirectAttributes redirectAttributes) {
+    PostEntity postUpdate = postService.getPostById(postId);
+    if (AppUtils.isValidUserRequest(postUpdate.getUser())) {
+      redirectAttributes.addFlashAttribute(
+          "userAccessDenied",
+          messageSource.getMessage("user.access.denied", null, LocaleContextHolder.getLocale()));
+      return REDIRECT_USER_HOME;
     }
+    model.addAttribute("categoryList", postService.getAllCategory());
+    model.addAttribute("postUpdate", postUpdate);
+    model.addAttribute("postData", new PostData());
+    return UPDATE_POST_PAGE;
+  }
 
-    @ModelAttribute("session_firstname")
-    public String session(final HttpServletRequest request) {
-        return (String) request.getSession().getAttribute("firstName");
+  @GetMapping("/post/delete/{postId}")
+  public String deletePost(
+      @PathVariable("postId") long postId,
+      final Model model,
+      RedirectAttributes redirectAttributes) {
+    PostEntity post = postService.getPostById(postId);
+    if (AppUtils.isValidUserRequest(post.getUser())) {
+      try {
+        AppUtils.deleteFile(post.getThumbnail());
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+      postService.removePost(post);
+      redirectAttributes.addFlashAttribute(
+          "postDeleteSuccessMessage",
+          messageSource.getMessage("post.deleted", null, LocaleContextHolder.getLocale()));
+    } else {
+      redirectAttributes.addFlashAttribute(
+          "userAccessDenied",
+          messageSource.getMessage("user.access.denied", null, LocaleContextHolder.getLocale()));
     }
+    return REDIRECT_USER_HOME;
+  }
+
+  @GetMapping("/post")
+  public String getCreatePostPage(Model model) {
+    model.addAttribute("post", new PostData());
+    model.addAttribute("categoryList", postService.getAllCategory());
+    return CREATE_POST_PAGE;
+  }
+
+  @GetMapping("/post/single")
+  public String getSinglePost(Model model) {
+    return "blog/blog";
+  }
+
+  @ModelAttribute("session_firstname")
+  public String session(final HttpServletRequest request) {
+    return (String) request.getSession().getAttribute("firstName");
+  }
 }
-

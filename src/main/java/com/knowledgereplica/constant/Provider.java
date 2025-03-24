@@ -1,5 +1,7 @@
 package com.knowledgereplica.constant;
 
 public enum Provider {
-    FORM, GOOGLE, FACEBOOK
+  FORM,
+  GOOGLE,
+  FACEBOOK
 }

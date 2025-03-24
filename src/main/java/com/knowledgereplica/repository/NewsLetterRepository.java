@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface NewsLetterRepository extends JpaRepository<NewsLetterEntity, String> {
 
-    @Query(nativeQuery = true, value = "SELECT EMAIL FROM NEWSLETTER")
-    public String[] getAllEmail();
+  @Query(nativeQuery = true, value = "SELECT EMAIL FROM NEWSLETTER")
+  public String[] getAllEmail();
 }

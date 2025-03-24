@@ -5,24 +5,25 @@ import java.io.Serializable;
 
 public class CommentData implements Serializable {
 
-    @NotEmpty(message = "{comment.validation.name}")
-    private String name;
-    @NotEmpty(message = "{comment.validation.comment}")
-    private String comment;
+  @NotEmpty(message = "{comment.validation.name}")
+  private String name;
 
-    public String getName() {
-        return name;
-    }
+  @NotEmpty(message = "{comment.validation.comment}")
+  private String comment;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public String getComment() {
-        return comment;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
+  public String getComment() {
+    return comment;
+  }
+
+  public void setComment(String comment) {
+    this.comment = comment;
+  }
 }
