@@ -1,0 +1,45 @@
+spring:
+  groovy:
+    template:
+      cache: false
+
+  # PostgreSQL Configuration
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/knowledge_replica
+    username: postgres      # change as per your local setup
+    password: postgres@123  # change as per your local setup
+
+  session:
+    store-type: jdbc
+    timeout: 100000
+    jdbc:
+      initialize-schema: always
+      table-name: SPRING_SESSION
+
+  flyway:
+    baselineOnMigrate: true
+    enabled: true
+    locations: classpath:db/migration/postgres # assuming you have a postgres-specific folder
+
+  # Thymeleaf Cache disabled
+  thymeleaf:
+    cache: false
+
+  # Mail configuration
+  mail:
+    host: localhost
+    username: hello
+    password: hello
+    port: 1025
+    properties:
+      mail:
+        smtp:
+          auth: true
+          connectiontimeout: 5000
+          ssl:
+            trust: '"*"'
+          starttls:
+            enable: false
+          timeout: 3000
+          writetimeout: 5000

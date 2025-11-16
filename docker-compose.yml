@@ -1,16 +1,32 @@
 version: '3.9'
 services:
+
+#  db:
+#    container_name: mysql
+#    image: mysql:8.0.30
+#    ports:
+#      # <Port exposed> : < MySQL Port running inside container>
+#      - '3306:3306'
+#    restart: always
+#    environment:
+#      MYSQL_ROOT_PASSWORD: 'mysql@123'
+#    volumes:
+#      - db:/var/lib/mysql
+#      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+#
   db:
-    container_name: mysql
-    image: mysql:8.0.30
+    container_name: postgres
+    image: postgres:16
     ports:
-      # <Port exposed> : < MySQL Port running inside container>
-      - '3306:3306'
+      # <Port exposed> : <PostgreSQL port inside container>
+      - '5432:5432'
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: 'mysql@123'
+      POSTGRES_DB: KRDB
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 'postgres@123'
     volumes:
-      - db:/var/lib/mysql
+      - db:/var/lib/postgresql/data
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
 
   maildev:
